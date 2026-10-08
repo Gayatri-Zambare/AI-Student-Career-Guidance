@@ -1,8 +1,8 @@
 /**
  * script.js
  * Client-side interactivity for AI-Based Student Career Guidance System.
- * Handles assessment wizard pagination, progress tracking, Chart.js graphs,
- * and AI Assistant dynamic chat.
+ * Colorful and vibrant visualizations, assessment wizard pagination,
+ * progress tracking, and AI Assistant dynamic chat.
  */
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -19,18 +19,15 @@ function initOptionStyling() {
     const radioInputs = document.querySelectorAll('.option-label input[type="radio"]');
 
     radioInputs.forEach(input => {
-        // Set initial selected state
         if (input.checked) {
             input.closest('.option-label').classList.add('selected');
         }
 
         input.addEventListener('change', function () {
             const name = this.getAttribute('name');
-            // Remove 'selected' from siblings
             document.querySelectorAll(`input[name="${name}"]`).forEach(sibling => {
                 sibling.closest('.option-label').classList.remove('selected');
             });
-            // Add 'selected' to current
             if (this.checked) {
                 this.closest('.option-label').classList.add('selected');
             }
@@ -125,7 +122,6 @@ function initAssessmentWizard() {
             e.preventDefault();
             const firstUnansweredQ = unanswered[0];
             
-            // Find which category holds this question
             const targetBlock = document.getElementById(`question-card-${firstUnansweredQ}`);
             if (targetBlock) {
                 const parentPane = targetBlock.closest(".category-pane");
@@ -166,12 +162,29 @@ function updateAssessmentProgress() {
 }
 
 // ==============================================================================
-// 3. CHART.JS VISUALIZATIONS (MONOCHROME BLACK AND WHITE THEME)
+// 3. COLORFUL CHART.JS VISUALIZATIONS
 // ==============================================================================
 function initCharts() {
-    // 3.1 Career Compatibility Bar Chart
+    // 3.1 Colorful Career Compatibility Bar Chart
     const barCanvas = document.getElementById("careerBarChart");
     if (barCanvas && window.chartCareersData && window.chartScoresData) {
+        const vibrantColors = [
+            'rgba(79, 70, 229, 0.9)',   // Indigo
+            'rgba(124, 58, 237, 0.9)',  // Violet
+            'rgba(6, 182, 212, 0.9)',   // Cyan
+            'rgba(16, 185, 129, 0.9)',  // Emerald
+            'rgba(245, 158, 11, 0.9)',  // Amber
+            'rgba(236, 72, 153, 0.9)'   // Pink
+        ];
+        const borderColors = [
+            '#4f46e5',
+            '#7c3aed',
+            '#06b6d4',
+            '#10b981',
+            '#f59e0b',
+            '#ec4899'
+        ];
+
         new Chart(barCanvas, {
             type: 'bar',
             data: {
@@ -179,17 +192,10 @@ function initCharts() {
                 datasets: [{
                     label: 'Compatibility Match %',
                     data: window.chartScoresData,
-                    backgroundColor: [
-                        '#000000',
-                        '#212529',
-                        '#343a40',
-                        '#495057',
-                        '#6c757d',
-                        '#adb5bd'
-                    ],
-                    borderColor: '#000000',
-                    borderWidth: 1,
-                    borderRadius: 4
+                    backgroundColor: vibrantColors,
+                    borderColor: borderColors,
+                    borderWidth: 2,
+                    borderRadius: 8
                 }]
             },
             options: {
@@ -200,6 +206,11 @@ function initCharts() {
                         display: false
                     },
                     tooltip: {
+                        backgroundColor: '#1e1b4b',
+                        titleColor: '#ffffff',
+                        bodyColor: '#c7d2fe',
+                        padding: 12,
+                        cornerRadius: 8,
                         callbacks: {
                             label: function (context) {
                                 return ` Compatibility Match: ${context.parsed.y}%`;
@@ -215,15 +226,17 @@ function initCharts() {
                             callback: function (val) {
                                 return val + '%';
                             },
-                            font: { family: 'Inter', size: 11 }
+                            font: { family: 'Plus Jakarta Sans', size: 11, weight: '600' },
+                            color: '#64748b'
                         },
                         grid: {
-                            color: '#e9ecef'
+                            color: '#f1f5f9'
                         }
                     },
                     x: {
                         ticks: {
-                            font: { family: 'Inter', size: 11, weight: '600' }
+                            font: { family: 'Plus Jakarta Sans', size: 11, weight: '700' },
+                            color: '#334155'
                         },
                         grid: {
                             display: false
@@ -234,7 +247,7 @@ function initCharts() {
         });
     }
 
-    // 3.2 Skill Profile Radar Chart
+    // 3.2 Colorful Skill Profile Radar Chart
     const radarCanvas = document.getElementById("skillRadarChart");
     if (radarCanvas && window.skillProfileData) {
         const labels = Object.keys(window.skillProfileData);
@@ -247,14 +260,14 @@ function initCharts() {
                 datasets: [{
                     label: 'Demonstrated Aptitude Score',
                     data: dataValues,
-                    backgroundColor: 'rgba(0, 0, 0, 0.1)',
-                    borderColor: '#000000',
-                    borderWidth: 2,
-                    pointBackgroundColor: '#000000',
+                    backgroundColor: 'rgba(99, 102, 241, 0.25)',
+                    borderColor: '#4f46e5',
+                    borderWidth: 2.5,
+                    pointBackgroundColor: '#7c3aed',
                     pointBorderColor: '#ffffff',
-                    pointBorderWidth: 2,
-                    pointRadius: 4,
-                    pointHoverRadius: 6
+                    pointBorderWidth: 2.5,
+                    pointRadius: 5,
+                    pointHoverRadius: 7
                 }]
             },
             options: {
@@ -263,23 +276,28 @@ function initCharts() {
                 plugins: {
                     legend: {
                         display: false
+                    },
+                    tooltip: {
+                        backgroundColor: '#1e1b4b',
+                        padding: 10,
+                        cornerRadius: 8
                     }
                 },
                 scales: {
                     r: {
                         angleLines: {
-                            color: '#dee2e6'
+                            color: '#e2e8f0'
                         },
                         grid: {
-                            color: '#e9ecef'
+                            color: '#e2e8f0'
                         },
                         pointLabels: {
                             font: {
-                                family: 'Inter',
+                                family: 'Plus Jakarta Sans',
                                 size: 12,
-                                weight: '600'
+                                weight: '700'
                             },
-                            color: '#121212'
+                            color: '#1e293b'
                         },
                         ticks: {
                             beginAtZero: true,
@@ -316,11 +334,9 @@ function initAiAssistant() {
     async function sendQuery(queryText) {
         if (!queryText.trim()) return;
 
-        // Display user message
         appendMessage(queryText, true);
         queryInput.value = "";
 
-        // Display typing indicator
         const typingIndicator = document.createElement("div");
         typingIndicator.className = "chat-bubble-bot";
         typingIndicator.id = "typing-placeholder";

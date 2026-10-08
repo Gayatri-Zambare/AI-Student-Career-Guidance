@@ -5,22 +5,29 @@
 {% block content %}
 <div class="container py-4">
     <!-- Student Header Banner -->
-    <div class="d-flex flex-wrap align-items-center justify-content-between p-3 bg-light border rounded mb-4">
-        <div>
-            <span class="badge bg-dark me-2">Candidate</span>
-            <span class="fw-bold fs-5 text-dark">{{ student.name }}</span>
-            <span class="text-secondary ms-2 small">({{ student.education }}{% if student.course %} • {{ student.course }}{% endif %})</span>
+    <div class="d-flex flex-wrap align-items-center justify-content-between p-3 bg-white border rounded-3 shadow-sm mb-4">
+        <div class="d-flex align-items-center gap-3">
+            <div class="brand-icon-box" style="width: 44px; height: 44px; font-size: 1.3rem;">
+                <i class="bi bi-person-fill text-white"></i>
+            </div>
+            <div>
+                <span class="badge bg-primary-subtle text-primary fw-bold mb-1">Registered Student</span>
+                <h5 class="fw-bold mb-0 text-dark">{{ student.name }}</h5>
+                <span class="text-secondary small">{{ student.education }}{% if student.course %} • {{ student.course }}{% endif %}</span>
+            </div>
         </div>
-        <div class="small text-secondary">
-            <i class="bi bi-shield-check text-dark me-1"></i> Transparent AI Evaluation
+        <div class="d-flex align-items-center gap-2 mt-2 mt-md-0">
+            <span class="badge bg-success-subtle text-success px-3 py-2 rounded-pill fw-bold">
+                <i class="bi bi-check-circle-fill me-1"></i> Multi-Dimensional Evaluation
+            </span>
         </div>
     </div>
 
     <!-- Progress Indicator Card -->
     <div class="progress-container">
         <div class="d-flex justify-content-between align-items-center mb-2">
-            <span class="fw-bold small text-uppercase" style="letter-spacing: 0.05em;">Assessment Progress</span>
-            <span class="fw-bold small" id="assessment-progress-count">0 of 30 Questions Answered (0%)</span>
+            <span class="fw-bold small text-uppercase text-secondary" style="letter-spacing: 0.05em;">Assessment Progress</span>
+            <span class="fw-bold small text-primary" id="assessment-progress-count">0 of 30 Questions Answered (0%)</span>
         </div>
         <div class="custom-progress-bar">
             <div class="custom-progress-fill" id="assessment-progress-fill" style="width: 0%;"></div>
@@ -41,21 +48,21 @@
         {% for cat in categories %}
             <div class="category-pane {% if not loop.first %}d-none{% endif %}" id="cat-pane-{{ loop.index0 }}">
                 <div class="card card-custom mb-4">
-                    <div class="card-header bg-dark text-white p-3 d-flex justify-content-between align-items-center">
+                    <div class="card-header-gradient p-3 d-flex justify-content-between align-items-center">
                         <div>
-                            <h5 class="mb-0 fw-bold"><i class="bi {{ cat.icon }} me-2"></i> Section {{ loop.index }}: {{ cat.name }}</h5>
-                            <small class="text-light opacity-75">{{ cat.description }}</small>
+                            <h5 class="mb-0 fw-bold text-white"><i class="bi {{ cat.icon }} me-2"></i> Section {{ loop.index }}: {{ cat.name }}</h5>
+                            <small class="text-light opacity-90">{{ cat.description }}</small>
                         </div>
-                        <span class="badge bg-light text-dark fw-bold">Questions {{ cat.question_ids[0] }} to {{ cat.question_ids[-1] }}</span>
+                        <span class="badge bg-white text-primary fw-bold px-3 py-2 rounded-pill">Questions {{ cat.question_ids[0] }} to {{ cat.question_ids[-1] }}</span>
                     </div>
 
                     <div class="card-body p-4">
                         {% for q in questions %}
                             {% if q.id in cat.question_ids %}
                                 <div class="question-block" id="question-card-{{ q.id }}">
-                                    <div class="question-title">
-                                        <span class="badge bg-dark rounded-pill me-2">Q{{ q.id }}</span>
-                                        <span>{{ q.text }} <span class="text-danger">*</span></span>
+                                    <div class="question-title d-flex align-items-start gap-2 mb-3">
+                                        <span class="question-badge">Q{{ q.id }}</span>
+                                        <span class="fw-bold fs-6 text-dark">{{ q.text }} <span class="text-danger">*</span></span>
                                     </div>
 
                                     <div class="options-container ps-md-4">
@@ -78,13 +85,13 @@
         <!-- Navigation Action Buttons -->
         <div class="card card-custom p-3 mb-5">
             <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
-                <button type="button" class="btn btn-outline-dark px-4 fw-bold" id="btn-prev-category" disabled>
+                <button type="button" class="btn btn-secondary-custom px-4 fw-bold" id="btn-prev-category" disabled>
                     <i class="bi bi-arrow-left me-1"></i> Previous Section
                 </button>
-                <button type="button" class="btn btn-dark px-4 fw-bold" id="btn-next-category">
+                <button type="button" class="btn btn-gradient px-4 fw-bold" id="btn-next-category">
                     Next Section <i class="bi bi-arrow-right ms-1"></i>
                 </button>
-                <button type="submit" class="btn btn-dark px-5 py-2 fw-bold d-none" id="btn-submit-assessment">
+                <button type="submit" class="btn btn-gradient px-5 py-2 fw-bold d-none" id="btn-submit-assessment">
                     <i class="bi bi-check2-circle me-1"></i> Submit Assessment & Analyze Careers
                 </button>
             </div>
