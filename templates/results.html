@@ -1,0 +1,210 @@
+{% extends "base.html" %}
+
+{% block title %}Career Results Dashboard - AI Career Guidance{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- Header Title Banner -->
+    <div class="d-flex flex-wrap justify-content-between align-items-center pb-3 mb-4 border-bottom">
+        <div>
+            <span class="badge bg-dark mb-1">AI Recommendation Engine Report</span>
+            <h2 class="fw-bold mb-0">Personalized Career Results Dashboard</h2>
+        </div>
+        <div class="d-flex gap-2 mt-2 mt-md-0">
+            <button onclick="window.print()" class="btn btn-outline-dark btn-sm fw-bold">
+                <i class="bi bi-printer me-1"></i> Print / Save Report
+            </button>
+            <a href="{{ url_for('assessment') }}" class="btn btn-light btn-sm border fw-bold">
+                <i class="bi bi-arrow-repeat me-1"></i> Retake Assessment
+            </a>
+        </div>
+    </div>
+
+    <!-- 1. Student Profile Summary Card (Section 13) -->
+    <div class="card card-custom mb-4">
+        <div class="card-header bg-dark text-white p-3">
+            <h5 class="mb-0 fw-bold"><i class="bi bi-person-badge-fill me-2"></i> Student Candidate Profile</h5>
+        </div>
+        <div class="card-body p-4">
+            <div class="row g-3">
+                <div class="col-md-4 col-sm-6">
+                    <span class="text-secondary small d-block">Student Name</span>
+                    <strong class="fs-5 text-dark">{{ student.name }}</strong>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <span class="text-secondary small d-block">Education Level</span>
+                    <strong class="text-dark">{{ student.education }} {% if student.course %}({{ student.course }}){% endif %}</strong>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <span class="text-secondary small d-block">Academic Standing</span>
+                    <strong class="text-dark">{{ student.academic_year or 'Registered Student' }}</strong>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <span class="text-secondary small d-block">Strongest Subject</span>
+                    <span class="badge bg-dark text-white px-2 py-1 mt-1">{{ strongest_subject }}</span>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <span class="text-secondary small d-block">Strongest Skill</span>
+                    <span class="badge bg-light text-dark border border-dark px-2 py-1 mt-1">{{ strongest_skill }}</span>
+                </div>
+                <div class="col-md-4 col-sm-12">
+                    <span class="text-secondary small d-block">Primary Interests</span>
+                    <span class="text-dark small d-block mt-1">{{ student.interests or 'Exploration of multiple domains' }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Navigation Hub -->
+    <div class="card card-custom p-3 mb-4 bg-light">
+        <div class="d-flex flex-wrap align-items-center justify-content-between gap-2">
+            <span class="fw-bold small text-uppercase" style="letter-spacing: 0.05em;">Explore Deep Dive Tools:</span>
+            <div class="d-flex flex-wrap gap-2">
+                <a href="{{ url_for('comparison') }}" class="btn btn-outline-dark btn-sm fw-bold">
+                    <i class="bi bi-layout-split me-1"></i> Career Comparison
+                </a>
+                <a href="{{ url_for('skill_gap') }}" class="btn btn-outline-dark btn-sm fw-bold">
+                    <i class="bi bi-bar-chart-steps me-1"></i> Skill Gap Analysis
+                </a>
+                <a href="{{ url_for('roadmap') }}" class="btn btn-outline-dark btn-sm fw-bold">
+                    <i class="bi bi-signpost-split me-1"></i> Career Roadmap
+                </a>
+                <a href="{{ url_for('assistant') }}" class="btn btn-dark btn-sm fw-bold">
+                    <i class="bi bi-chat-dots-fill me-1"></i> AI Career Assistant
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. AI Career Recommendations Section (Sections 11, 12, 13) -->
+    <div class="mb-4">
+        <h3 class="fw-bold mb-3"><i class="bi bi-stars me-2"></i> Top AI Career Recommendations</h3>
+        <p class="text-secondary mb-4">
+            Calculated by the recommendation engine based on your quantitative skills, interests, work style, and academic performance.
+        </p>
+
+        <div class="row g-4">
+            {% for rec in top_careers %}
+                <div class="col-lg-12">
+                    <div class="career-match-card">
+                        <div class="d-flex flex-wrap justify-content-between align-items-start gap-2 mb-3">
+                            <div>
+                                <span class="career-rank-pill">#{{ loop.index }} Recommended Path</span>
+                                <span class="badge bg-light text-secondary border ms-1">{{ rec.category }}</span>
+                                <h3 class="fw-bold text-dark mt-1 mb-1">{{ rec.career }}</h3>
+                                <div class="text-secondary small">
+                                    <i class="bi bi-mortarboard me-1"></i> Typical Education: {{ rec.education }}
+                                </div>
+                            </div>
+                            <div class="text-end">
+                                <div class="match-score-badge">
+                                    {{ rec.score }}% Match
+                                </div>
+                                <div class="small text-secondary mt-1">Compatibility Score</div>
+                            </div>
+                        </div>
+
+                        <!-- Why Recommended -->
+                        <div class="p-3 bg-light border rounded mb-3">
+                            <h6 class="fw-bold text-dark mb-1">
+                                <i class="bi bi-lightbulb-fill text-dark me-1"></i> Why this career is recommended:
+                            </h6>
+                            <p class="mb-0 text-secondary" style="line-height: 1.5;">
+                                “{{ rec.explanation }}”
+                            </p>
+                        </div>
+
+                        <!-- Skills and Roles -->
+                        <div class="row g-3">
+                            <div class="col-md-7">
+                                <h6 class="fw-bold text-dark small text-uppercase mb-2" style="letter-spacing: 0.04em;">Required Skills:</h6>
+                                <div>
+                                    {% for skill in rec.required_skills %}
+                                        <span class="badge-skill">{{ skill }}</span>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <h6 class="fw-bold text-dark small text-uppercase mb-2" style="letter-spacing: 0.04em;">Possible Roles:</h6>
+                                <div>
+                                    {% for role in rec.possible_roles %}
+                                        <span class="badge-role">{{ role }}</span>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card action buttons -->
+                        <div class="border-top pt-3 mt-3 d-flex justify-content-end gap-2">
+                            <a href="{{ url_for('skill_gap', career=rec.career) }}" class="btn btn-outline-dark btn-sm">
+                                View Skill Gaps
+                            </a>
+                            <a href="{{ url_for('roadmap', career=rec.career) }}" class="btn btn-dark btn-sm">
+                                View Career Roadmap <i class="bi bi-arrow-right ms-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- 3. Profile Visualizations (Section 14) -->
+    <div class="row g-4 mb-4">
+        <!-- Compatibility Bar Chart -->
+        <div class="col-lg-6">
+            <div class="card card-custom h-100">
+                <div class="card-header bg-dark text-white p-3">
+                    <h6 class="mb-0 fw-bold"><i class="bi bi-bar-chart-fill me-2"></i> Career Compatibility Analysis</h6>
+                </div>
+                <div class="card-body p-4">
+                    <p class="text-secondary small mb-3">Comparison of match percentages for your top aligned career domains.</p>
+                    <div style="height: 280px; position: relative;">
+                        <canvas id="careerBarChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Skill Profile Radar Chart -->
+        <div class="col-lg-6">
+            <div class="card card-custom h-100">
+                <div class="card-header bg-dark text-white p-3">
+                    <h6 class="mb-0 fw-bold"><i class="bi bi-radar me-2"></i> Demonstrated Skill Aptitude Profile</h6>
+                </div>
+                <div class="card-body p-4">
+                    <p class="text-secondary small mb-3">Evaluation of your 6 core dimensions calculated from assessment answers.</p>
+                    <div style="height: 280px; position: relative;">
+                        <canvas id="skillRadarChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Next steps CTA card -->
+    <div class="card card-custom p-4 bg-light text-center">
+        <h4 class="fw-bold mb-2">Have questions about your results?</h4>
+        <p class="text-secondary mb-3">
+            Ask our intelligent AI Career Assistant for customized guidance on college degrees, skills, and industry expectations.
+        </p>
+        <div class="d-flex justify-content-center gap-3">
+            <a href="{{ url_for('assistant') }}" class="btn btn-dark px-4 fw-bold">
+                <i class="bi bi-chat-dots-fill me-1"></i> Ask AI Assistant
+            </a>
+            <a href="{{ url_for('feedback') }}" class="btn btn-outline-dark px-4 fw-bold">
+                <i class="bi bi-hand-thumbs-up-fill me-1"></i> Give Feedback
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Pass server data to window for Chart.js in script.js
+    window.chartCareersData = {{ chart_careers | tojson }};
+    window.chartScoresData = {{ chart_scores | tojson }};
+    window.skillProfileData = {{ skill_profile | tojson }};
+</script>
+{% endblock %}

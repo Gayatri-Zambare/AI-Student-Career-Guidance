@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block title %}Career Assessment - AI-Based Student Career Guidance{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- Student Header Banner -->
+    <div class="d-flex flex-wrap align-items-center justify-content-between p-3 bg-light border rounded mb-4">
+        <div>
+            <span class="badge bg-dark me-2">Candidate</span>
+            <span class="fw-bold fs-5 text-dark">{{ student.name }}</span>
+            <span class="text-secondary ms-2 small">({{ student.education }}{% if student.course %} • {{ student.course }}{% endif %})</span>
+        </div>
+        <div class="small text-secondary">
+            <i class="bi bi-shield-check text-dark me-1"></i> Transparent AI Evaluation
+        </div>
+    </div>
+
+    <!-- Progress Indicator Card -->
+    <div class="progress-container">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <span class="fw-bold small text-uppercase" style="letter-spacing: 0.05em;">Assessment Progress</span>
+            <span class="fw-bold small" id="assessment-progress-count">0 of 30 Questions Answered (0%)</span>
+        </div>
+        <div class="custom-progress-bar">
+            <div class="custom-progress-fill" id="assessment-progress-fill" style="width: 0%;"></div>
+        </div>
+    </div>
+
+    <!-- Category Tabs Navigation -->
+    <div class="d-flex flex-nowrap overflow-auto border-bottom mb-4 pb-1">
+        {% for cat in categories %}
+            <div class="assessment-category-tab flex-shrink-0 {% if loop.first %}active{% endif %}" data-cat-index="{{ loop.index0 }}">
+                <i class="bi {{ cat.icon }} me-1"></i> {{ cat.name }} (Q{{ cat.question_ids[0] }}-Q{{ cat.question_ids[-1] }})
+            </div>
+        {% endfor %}
+    </div>
+
+    <!-- Assessment Form -->
+    <form action="{{ url_for('submit_assessment') }}" method="POST" id="assessment-form">
+        {% for cat in categories %}
+            <div class="category-pane {% if not loop.first %}d-none{% endif %}" id="cat-pane-{{ loop.index0 }}">
+                <div class="card card-custom mb-4">
+                    <div class="card-header bg-dark text-white p-3 d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 class="mb-0 fw-bold"><i class="bi {{ cat.icon }} me-2"></i> Section {{ loop.index }}: {{ cat.name }}</h5>
+                            <small class="text-light opacity-75">{{ cat.description }}</small>
+                        </div>
+                        <span class="badge bg-light text-dark fw-bold">Questions {{ cat.question_ids[0] }} to {{ cat.question_ids[-1] }}</span>
+                    </div>
+
+                    <div class="card-body p-4">
+                        {% for q in questions %}
+                            {% if q.id in cat.question_ids %}
+                                <div class="question-block" id="question-card-{{ q.id }}">
+                                    <div class="question-title">
+                                        <span class="badge bg-dark rounded-pill me-2">Q{{ q.id }}</span>
+                                        <span>{{ q.text }} <span class="text-danger">*</span></span>
+                                    </div>
+
+                                    <div class="options-container ps-md-4">
+                                        {% for opt in q.options %}
+                                            {% set is_checked = (existing_responses and existing_responses.get(q.id) == opt) %}
+                                            <label class="option-label {% if is_checked %}selected{% endif %}">
+                                                <input type="radio" name="q{{ q.id }}" value="{{ opt }}" {% if is_checked %}checked{% endif %} required>
+                                                <span>{{ opt }}</span>
+                                            </label>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
+        <!-- Navigation Action Buttons -->
+        <div class="card card-custom p-3 mb-5">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+                <button type="button" class="btn btn-outline-dark px-4 fw-bold" id="btn-prev-category" disabled>
+                    <i class="bi bi-arrow-left me-1"></i> Previous Section
+                </button>
+                <button type="button" class="btn btn-dark px-4 fw-bold" id="btn-next-category">
+                    Next Section <i class="bi bi-arrow-right ms-1"></i>
+                </button>
+                <button type="submit" class="btn btn-dark px-5 py-2 fw-bold d-none" id="btn-submit-assessment">
+                    <i class="bi bi-check2-circle me-1"></i> Submit Assessment & Analyze Careers
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

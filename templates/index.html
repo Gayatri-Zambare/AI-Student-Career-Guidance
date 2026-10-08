@@ -1,0 +1,233 @@
+{% extends "base.html" %}
+
+{% block title %}Home - AI-Based Student Career Guidance System{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section text-center">
+    <div class="container py-4">
+        <div class="row justify-content-center">
+            <div class="col-lg-9">
+                <div class="d-inline-flex align-items-center gap-2 border border-secondary px-3 py-1 rounded-pill mb-3 small text-uppercase fw-semibold" style="letter-spacing: 0.05em;">
+                    <i class="bi bi-cpu text-white"></i> Explainable AI Recommendation Platform
+                </div>
+                <h1 class="display-4 fw-extrabold text-white mb-3" style="letter-spacing: -0.03em;">
+                    AI-Based Student Career Guidance System
+                </h1>
+                <p class="hero-tagline mb-3">
+                    “Discover your strengths. Explore your career. Build your future.”
+                </p>
+                <p class="text-secondary lead-custom mb-4 mx-auto" style="max-width: 720px;">
+                    An AI-based career guidance platform that analyzes your interests, skills, personality and academic profile to recommend suitable career paths.
+                </p>
+                <div class="d-flex justify-content-center gap-3 flex-wrap">
+                    <a href="{{ url_for('profile') }}" class="btn btn-light px-4 py-3 fw-bold" id="hero-start-btn">
+                        <i class="bi bi-play-circle-fill me-2"></i> Start Career Assessment
+                    </a>
+                    <a href="#how-it-works" class="btn btn-outline-light px-4 py-3 fw-semibold">
+                        <i class="bi bi-arrow-down-circle me-2"></i> How It Works
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- How It Works Section -->
+<section class="py-5 bg-white border-bottom" id="how-it-works">
+    <div class="container py-4">
+        <div class="section-header">
+            <h2>How It Works</h2>
+            <p>Three straightforward steps to discover your optimal career pathway.</p>
+        </div>
+
+        <div class="row g-4">
+            <!-- Step 1 -->
+            <div class="col-md-4">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h4 class="fw-bold mb-2">Complete Assessment</h4>
+                    <p class="text-secondary mb-0">
+                        Answer 30 targeted questions related to your interests, skills, personality, academic performance, and career goals.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="col-md-4">
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h4 class="fw-bold mb-2">AI Analyzes Your Profile</h4>
+                    <p class="text-secondary mb-0">
+                        The recommendation engine evaluates your responses and calculates career compatibility across 16 professional domains.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="col-md-4">
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h4 class="fw-bold mb-2">Get Personalized Guidance</h4>
+                    <p class="text-secondary mb-0">
+                        Receive transparent career recommendations, detailed skill-gap analysis, and a personalized 6-step roadmap.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="py-5 bg-light border-bottom" id="features">
+    <div class="container py-4">
+        <div class="section-header">
+            <h2>Comprehensive Guidance Features</h2>
+            <p>Everything students need to make informed, data-driven academic and career decisions.</p>
+        </div>
+
+        <div class="row g-3">
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-box">
+                    <div class="feature-icon"><i class="bi bi-robot"></i></div>
+                    <h5 class="fw-bold mb-1">AI-Based Career Recommendation</h5>
+                    <p class="text-secondary small mb-0">Rule-based machine matching engine that identifies your highest-fit career possibilities.</p>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-box">
+                    <div class="feature-icon"><i class="bi bi-heart-pulse"></i></div>
+                    <h5 class="fw-bold mb-1">Interest Analysis</h5>
+                    <p class="text-secondary small mb-0">Evaluates personal passions, hobby preferences, and activities that energize you.</p>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-box">
+                    <div class="feature-icon"><i class="bi bi-lightning-charge"></i></div>
+                    <h5 class="fw-bold mb-1">Skill Analysis</h5>
+                    <p class="text-secondary small mb-0">Assesses problem-solving, technical comfort, communication, and learning agility.</p>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-box">
+                    <div class="feature-icon"><i class="bi bi-person-bounding-box"></i></div>
+                    <h5 class="fw-bold mb-1">Personality Analysis</h5>
+                    <p class="text-secondary small mb-0">Reviews work styles, decision-making behavior, team dynamics, and leadership comfort.</p>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-box">
+                    <div class="feature-icon"><i class="bi bi-mortarboard"></i></div>
+                    <h5 class="fw-bold mb-1">Academic Analysis</h5>
+                    <p class="text-secondary small mb-0">Factors in current academic marks, favorite subjects, and learning frequency.</p>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-box">
+                    <div class="feature-icon"><i class="bi bi-pie-chart-fill"></i></div>
+                    <h5 class="fw-bold mb-1">Career Compatibility Score</h5>
+                    <p class="text-secondary small mb-0">Generates precise, transparent match percentages (e.g., 88% Match) without random guessing.</p>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-box">
+                    <div class="feature-icon"><i class="bi bi-bar-chart-steps"></i></div>
+                    <h5 class="fw-bold mb-1">Skill Gap Analysis</h5>
+                    <p class="text-secondary small mb-0">Compares your current abilities with industry requirements to highlight priority areas.</p>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-box">
+                    <div class="feature-icon"><i class="bi bi-signpost-split"></i></div>
+                    <h5 class="fw-bold mb-1">Career Roadmap</h5>
+                    <p class="text-secondary small mb-0">Step-by-step career blueprint from foundational study to professional job entry.</p>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-box">
+                    <div class="feature-icon"><i class="bi bi-layout-split"></i></div>
+                    <h5 class="fw-bold mb-1">Career Comparison</h5>
+                    <p class="text-secondary small mb-0">Side-by-side matrix comparing top recommended careers, work cultures, and education.</p>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-box">
+                    <div class="feature-icon"><i class="bi bi-chat-dots-fill"></i></div>
+                    <h5 class="fw-bold mb-1">AI Career Assistant</h5>
+                    <p class="text-secondary small mb-0">Interactive student assistant answering personalized questions based on your profile.</p>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-box">
+                    <div class="feature-icon"><i class="bi bi-check2-circle"></i></div>
+                    <h5 class="fw-bold mb-1">Student Feedback</h5>
+                    <p class="text-secondary small mb-0">Structured survey system capturing student feedback and recommendation satisfaction.</p>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-box bg-dark text-white">
+                    <div class="feature-icon text-white"><i class="bi bi-shield-check"></i></div>
+                    <h5 class="fw-bold text-white mb-1">Transparent & Explainable</h5>
+                    <p class="text-secondary small mb-0">Zero black-box decisions. Each recommendation explains exactly why it was chosen.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- About Section -->
+<section class="py-5 bg-white" id="about">
+    <div class="container py-4">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-6">
+                <h6 class="text-uppercase fw-bold text-secondary mb-2" style="letter-spacing: 0.05em;">About The Project</h6>
+                <h2 class="display-6 fw-bold mb-3">Empowering Students Through Transparent AI</h2>
+                <p class="text-secondary mb-3">
+                    Many students face uncertainty when transitioning between academic phases. Traditional advice is frequently subjective or limited to a handful of popular options.
+                </p>
+                <p class="text-secondary mb-4">
+                    The <strong>AI-Based Student Career Guidance System</strong> evaluates holistic aptitude—balancing cognitive reasoning, personal passions, practical preferences, and academic strengths across 16 modern career disciplines.
+                </p>
+                <div class="d-flex flex-column gap-2">
+                    <div class="d-flex align-items-center gap-2">
+                        <i class="bi bi-check-circle-fill text-dark"></i>
+                        <span>100% Python-based scoring without external API dependencies</span>
+                    </div>
+                    <div class="d-flex align-items-center gap-2">
+                        <i class="bi bi-check-circle-fill text-dark"></i>
+                        <span>Explainable rationale generated for every recommended pathway</span>
+                    </div>
+                    <div class="d-flex align-items-center gap-2">
+                        <i class="bi bi-check-circle-fill text-dark"></i>
+                        <span>Persistent SQLite storage for auditability and session tracking</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="p-4 p-md-5 border border-dark rounded-3 bg-light text-center">
+                    <i class="bi bi-mortarboard-fill display-2 text-dark mb-3"></i>
+                    <h4 class="fw-bold mb-2">Ready to Discover Your Career?</h4>
+                    <p class="text-secondary mb-4">
+                        Takes less than 5 minutes to complete the profile and 30-question assessment.
+                    </p>
+                    <a href="{{ url_for('profile') }}" class="btn btn-dark btn-lg w-100 fw-bold">
+                        Start Your Career Assessment Now
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

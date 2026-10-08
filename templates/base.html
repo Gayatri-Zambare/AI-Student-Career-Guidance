@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}AI-Based Student Career Guidance System{% endblock %}</title>
+    <meta name="description" content="AI-based career guidance platform analyzing student interests, skills, personality and academics to recommend tailored career paths.">
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap 5.3.3 CSS (CDN) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Bootstrap Icons 1.11.3 (CDN) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+    <!-- Custom Black and White Stylesheet -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    {% block head_extra %}{% endblock %}
+</head>
+<body>
+
+    <!-- Header / Navbar -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark navbar-custom" id="main-navbar">
+            <div class="container">
+                <a class="navbar-brand" href="{{ url_for('index') }}" id="brand-logo-link">
+                    <i class="bi bi-compass-fill"></i>
+                    <span>AI Career Guidance</span>
+                </a>
+                <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-3">
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.endpoint == 'index' %}active{% endif %}" href="{{ url_for('index') }}">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.endpoint == 'profile' %}active{% endif %}" href="{{ url_for('profile') }}">Profile</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.endpoint == 'assessment' %}active{% endif %}" href="{{ url_for('assessment') }}">Assessment</a>
+                        </li>
+                        {% if session.get('student_id') %}
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.endpoint == 'results' %}active{% endif %}" href="{{ url_for('results') }}">Results</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.endpoint == 'comparison' %}active{% endif %}" href="{{ url_for('comparison') }}">Comparison</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.endpoint == 'skill_gap' %}active{% endif %}" href="{{ url_for('skill_gap') }}">Skill Gap</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.endpoint == 'roadmap' %}active{% endif %}" href="{{ url_for('roadmap') }}">Roadmap</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.endpoint == 'assistant' %}active{% endif %}" href="{{ url_for('assistant') }}">AI Assistant</a>
+                        </li>
+                        {% endif %}
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.endpoint == 'feedback' %}active{% endif %}" href="{{ url_for('feedback') }}">Feedback</a>
+                        </li>
+                    </ul>
+
+                    <div class="d-flex align-items-center gap-2">
+                        {% if session.get('student_id') %}
+                            <a href="{{ url_for('results') }}" class="btn btn-outline-light btn-sm px-3" style="border-radius: 4px;">
+                                <i class="bi bi-speedometer2 me-1"></i> Dashboard
+                            </a>
+                            <a href="{{ url_for('reset') }}" class="btn btn-dark btn-sm text-secondary" title="Start over with new profile">
+                                <i class="bi bi-arrow-repeat"></i> Reset
+                            </a>
+                        {% else %}
+                            <a href="{{ url_for('profile') }}" class="btn btn-light btn-sm px-3 text-dark fw-bold" id="nav-start-btn">
+                                <i class="bi bi-lightning-charge-fill me-1"></i> Start Assessment
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Flash Message Banner -->
+    <div class="container mt-3">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category if category != 'error' else 'danger' }} alert-dismissible fade show border" role="alert">
+                        <i class="bi {% if category == 'success' %}bi-check-circle-fill{% elif category == 'warning' %}bi-exclamation-triangle-fill{% elif category == 'info' %}bi-info-circle-fill{% else %}bi-x-circle-fill{% endif %} me-2"></i>
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <!-- Main Page Content -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer-custom">
+        <div class="container">
+            <div class="row g-4 mb-4">
+                <div class="col-lg-5 col-md-6">
+                    <h5 class="text-white mb-2 fw-bold">
+                        <i class="bi bi-compass-fill me-2"></i>AI Career Guidance System
+                    </h5>
+                    <p class="text-secondary small mb-3">
+                        “Discover your strengths. Explore your career. Build your future.”<br>
+                        An intelligent, explainable career recommendation engine designed to analyze student aptitude, interests, and personality.
+                    </p>
+                    <div class="d-flex gap-2">
+                        <span class="badge bg-secondary">Python 3</span>
+                        <span class="badge bg-secondary">Flask</span>
+                        <span class="badge bg-secondary">SQLite</span>
+                        <span class="badge bg-secondary">Bootstrap 5</span>
+                        <span class="badge bg-secondary">Chart.js</span>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h6 class="text-white fw-bold mb-3">Navigation</h6>
+                    <ul class="list-unstyled small text-secondary">
+                        <li class="mb-1"><a href="{{ url_for('index') }}" class="text-secondary text-decoration-none">Home</a></li>
+                        <li class="mb-1"><a href="{{ url_for('profile') }}" class="text-secondary text-decoration-none">Student Profile</a></li>
+                        <li class="mb-1"><a href="{{ url_for('assessment') }}" class="text-secondary text-decoration-none">30-Question Assessment</a></li>
+                        <li class="mb-1"><a href="{{ url_for('feedback') }}" class="text-secondary text-decoration-none">Student Feedback</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-12">
+                    <h6 class="text-white fw-bold mb-3">FAI Mini-Project</h6>
+                    <p class="text-secondary small mb-2">
+                        Designed for academic viva demonstration with transparent scoring, zero external paid API dependencies, and explainable AI insights.
+                    </p>
+                    <p class="text-secondary small mb-0">
+                        Status: <span class="text-white fw-bold">System Online & Fully Integrated</span>
+                    </p>
+                </div>
+            </div>
+            <div class="pt-3 border-top border-dark text-center text-secondary small">
+                &copy; {{ 2026 }} AI-Based Student Career Guidance System. Built with Flask & SQLite.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5.3.3 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Chart.js 4.4.2 (CDN) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+    <!-- Main Application JavaScript -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

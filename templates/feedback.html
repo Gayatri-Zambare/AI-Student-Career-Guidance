@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+
+{% block title %}Student Feedback - AI Career Guidance{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+            <!-- Header -->
+            <div class="d-flex justify-content-between align-items-center pb-3 mb-4 border-bottom">
+                <div>
+                    <span class="badge bg-dark mb-1">User Experience Evaluation</span>
+                    <h2 class="fw-bold mb-0">Student Feedback</h2>
+                </div>
+                <div>
+                    {% if session.get('student_id') %}
+                    <a href="{{ url_for('results') }}" class="btn btn-outline-dark btn-sm fw-bold">
+                        <i class="bi bi-arrow-left me-1"></i> Back to Dashboard
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+
+            {% if submitted %}
+                <!-- Success Message Display (Section 19) -->
+                <div class="card card-custom p-5 text-center my-4 border-dark">
+                    <div class="mb-3">
+                        <i class="bi bi-check-circle-fill display-2 text-dark"></i>
+                    </div>
+                    <h3 class="fw-bold mb-2">Thank you! Your feedback has been successfully submitted.</h3>
+                    <p class="text-secondary mb-4">
+                        Your valuable feedback has been recorded in our SQLite database to assist in academic evaluation and recommendation fine-tuning.
+                    </p>
+                    <div class="d-flex justify-content-center gap-3">
+                        <a href="{{ url_for('results') }}" class="btn btn-dark fw-bold px-4">
+                            <i class="bi bi-speedometer2 me-1"></i> Return to Results Dashboard
+                        </a>
+                        <a href="{{ url_for('reset') }}" class="btn btn-outline-dark fw-bold px-4">
+                            <i class="bi bi-arrow-repeat me-1"></i> Take New Assessment
+                        </a>
+                    </div>
+                </div>
+            {% else %}
+                <div class="card card-custom mb-4">
+                    <div class="card-header bg-dark text-white p-3">
+                        <h5 class="mb-0 fw-bold"><i class="bi bi-chat-square-quote-fill me-2"></i> System Evaluation & Experience Survey</h5>
+                    </div>
+                    <div class="card-body p-4 p-md-5">
+                        <p class="text-secondary mb-4">
+                            Please take a minute to rate your experience with the AI-Based Student Career Guidance System.
+                        </p>
+
+                        <form action="{{ url_for('submit_feedback') }}" method="POST" id="feedback-form">
+                            <!-- Q1: Usefulness -->
+                            <div class="mb-4">
+                                <label class="form-label fw-bold d-block">
+                                    1. How useful was the career assessment? <span class="text-danger">*</span>
+                                </label>
+                                <div class="row g-2">
+                                    {% for opt in ["Very useful", "Useful", "Neutral", "Not useful"] %}
+                                    <div class="col-sm-6">
+                                        <label class="option-label">
+                                            <input type="radio" name="usefulness" value="{{ opt }}" required>
+                                            <span>{{ opt }}</span>
+                                        </label>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+
+                            <!-- Q2: Satisfaction -->
+                            <div class="mb-4">
+                                <label class="form-label fw-bold d-block">
+                                    2. How satisfied are you with the recommendations? <span class="text-danger">*</span>
+                                </label>
+                                <div class="row g-2">
+                                    {% for opt in ["Very satisfied", "Satisfied", "Neutral", "Dissatisfied"] %}
+                                    <div class="col-sm-6">
+                                        <label class="option-label">
+                                            <input type="radio" name="satisfaction" value="{{ opt }}" required>
+                                            <span>{{ opt }}</span>
+                                        </label>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+
+                            <!-- Q3: Interest match -->
+                            <div class="mb-4">
+                                <label class="form-label fw-bold d-block">
+                                    3. Did the recommendations match your interests? <span class="text-danger">*</span>
+                                </label>
+                                <div class="row g-2">
+                                    {% for opt in ["Yes", "Partially", "No"] %}
+                                    <div class="col-sm-4">
+                                        <label class="option-label">
+                                            <input type="radio" name="interest_match" value="{{ opt }}" required>
+                                            <span>{{ opt }}</span>
+                                        </label>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+
+                            <!-- Q4: Ease of understanding -->
+                            <div class="mb-4">
+                                <label class="form-label fw-bold d-block">
+                                    4. Was the assessment easy to understand? <span class="text-danger">*</span>
+                                </label>
+                                <div class="row g-2">
+                                    {% for opt in ["Very easy", "Easy", "Average", "Difficult"] %}
+                                    <div class="col-sm-6">
+                                        <label class="option-label">
+                                            <input type="radio" name="ease_of_use" value="{{ opt }}" required>
+                                            <span>{{ opt }}</span>
+                                        </label>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+
+                            <!-- Q5: Liked most -->
+                            <div class="mb-4">
+                                <label for="positive_feedback" class="form-label fw-bold">
+                                    5. What did you like most about the system?
+                                </label>
+                                <textarea class="form-control border-dark" id="positive_feedback" name="positive_feedback" rows="3" 
+                                          placeholder="e.g. Clear explanations for career scores, interactive radar chart, step-by-step roadmap..."></textarea>
+                            </div>
+
+                            <!-- Q6: Improvements -->
+                            <div class="mb-4">
+                                <label for="improvement_feedback" class="form-label fw-bold">
+                                    6. What improvements would you suggest?
+                                </label>
+                                <textarea class="form-control border-dark" id="improvement_feedback" name="improvement_feedback" rows="3" 
+                                          placeholder="e.g. More engineering sub-disciplines, video course links..."></textarea>
+                            </div>
+
+                            <!-- Submit button -->
+                            <div class="d-grid mt-4">
+                                <button type="submit" class="btn btn-dark btn-lg py-3 fw-bold" id="submit-feedback-btn">
+                                    <i class="bi bi-send-check-fill me-2"></i> Submit Student Feedback
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+
+{% block title %}Student Profile - AI Career Guidance{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+            <!-- Header card -->
+            <div class="card card-custom mb-4">
+                <div class="card-header-custom d-flex align-items-center justify-content-between">
+                    <span class="fs-5"><i class="bi bi-person-lines-fill me-2"></i> Student Profile Registration</span>
+                    <span class="badge bg-light text-dark fw-bold">Step 1 of 2</span>
+                </div>
+                <div class="card-body p-4 p-md-5">
+                    <p class="text-secondary mb-4">
+                        Please provide your academic background and interests. Our AI Recommendation Engine will combine these details with your assessment responses to deliver personalized, explainable career guidance.
+                    </p>
+
+                    <form action="{{ url_for('profile') }}" method="POST" id="profile-form" novalidate>
+                        <!-- Name & Age -->
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-8">
+                                <label for="name" class="form-label fw-bold">Full Name <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control form-control-lg border-dark" id="name" name="name" 
+                                       value="{{ form_data.name if form_data else (student.name if student else '') }}" 
+                                       placeholder="e.g. Alex Johnson" required>
+                                <div class="invalid-feedback">Please enter your full name.</div>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="age" class="form-label fw-bold">Age <span class="text-danger">*</span></label>
+                                <input type="number" class="form-control form-control-lg border-dark" id="age" name="age" 
+                                       value="{{ form_data.age if form_data else (student.age if student else '') }}" 
+                                       min="12" max="70" placeholder="e.g. 19" required>
+                                <div class="invalid-feedback">Valid age (12–70).</div>
+                            </div>
+                        </div>
+
+                        <!-- Email -->
+                        <div class="mb-3">
+                            <label for="email" class="form-label fw-bold">Email Address <span class="text-danger">*</span></label>
+                            <input type="email" class="form-control form-control-lg border-dark" id="email" name="email" 
+                                   value="{{ form_data.email if form_data else (student.email if student else '') }}" 
+                                   placeholder="alex.johnson@example.com" required>
+                            <div class="form-text text-secondary">Your email is kept confidential and used solely for student session tracking.</div>
+                        </div>
+
+                        <!-- Education Level & Stream -->
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label for="education" class="form-label fw-bold">Education Level <span class="text-danger">*</span></label>
+                                {% set cur_edu = form_data.education if form_data else (student.education if student else '') %}
+                                <select class="form-select form-select-lg border-dark" id="education" name="education" required>
+                                    <option value="" disabled {% if not cur_edu %}selected{% endif %}>Select current level...</option>
+                                    <option value="10th" {% if cur_edu == '10th' %}selected{% endif %}>10th Grade / Secondary School</option>
+                                    <option value="12th" {% if cur_edu == '12th' %}selected{% endif %}>12th Grade / Senior Secondary</option>
+                                    <option value="Diploma" {% if cur_edu == 'Diploma' %}selected{% endif %}>Polytechnic / Diploma</option>
+                                    <option value="Undergraduate" {% if cur_edu == 'Undergraduate' %}selected{% endif %}>Undergraduate (B.Tech, B.Sc, B.Com, etc.)</option>
+                                    <option value="Postgraduate" {% if cur_edu == 'Postgraduate' %}selected{% endif %}>Postgraduate (M.Tech, MBA, M.Sc, etc.)</option>
+                                    <option value="Other" {% if cur_edu == 'Other' %}selected{% endif %}>Other</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="course" class="form-label fw-bold">Course / Stream</label>
+                                <input type="text" class="form-control form-control-lg border-dark" id="course" name="course" 
+                                       value="{{ form_data.course if form_data else (student.course if student else '') }}" 
+                                       placeholder="e.g. Computer Science, PCM, Commerce">
+                            </div>
+                        </div>
+
+                        <!-- Academic Year -->
+                        <div class="mb-3">
+                            <label for="academic_year" class="form-label fw-bold">Academic Year / Semester</label>
+                            <input type="text" class="form-control form-control-lg border-dark" id="academic_year" name="academic_year" 
+                                   value="{{ form_data.academic_year if form_data else (student.academic_year if student else '') }}" 
+                                   placeholder="e.g. 2nd Year, Final Year, or Class 12">
+                        </div>
+
+                        <!-- Favorite Subjects -->
+                        <div class="mb-3">
+                            <label for="favorite_subjects" class="form-label fw-bold">Favorite Subjects <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control form-control-lg border-dark" id="favorite_subjects" name="favorite_subjects" 
+                                   value="{{ form_data.favorite_subjects if form_data else (student.favorite_subjects if student else '') }}" 
+                                   placeholder="e.g. Mathematics, Computer Science, Physics, Economics" required>
+                            <div class="form-text text-secondary">List subjects where you score well or naturally enjoy studying.</div>
+                        </div>
+
+                        <!-- Main Areas of Interest -->
+                        <div class="mb-4">
+                            <label for="interests" class="form-label fw-bold">Main Areas of Interest <span class="text-danger">*</span></label>
+                            <textarea class="form-control border-dark" id="interests" name="interests" rows="3" 
+                                      placeholder="e.g. Coding, web design, artificial intelligence, solving logic puzzles, reading science fiction, organizing college events..." required>{{ form_data.interests if form_data else (student.interests if student else '') }}</textarea>
+                            <div class="form-text text-secondary">Describe your hobbies, creative projects, or topics you like researching in your free time.</div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="d-grid mt-4">
+                            <button type="submit" class="btn btn-dark btn-lg py-3 fw-bold" id="submit-profile-btn">
+                                Save Profile & Proceed to Assessment <i class="bi bi-arrow-right ms-2"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Notice card -->
+            <div class="card bg-light border p-3 text-center small text-secondary">
+                <i class="bi bi-info-circle me-1"></i> All profile data is stored securely in local SQLite for research and recommendation modeling.
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

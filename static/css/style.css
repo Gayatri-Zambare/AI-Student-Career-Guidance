@@ -1,0 +1,580 @@
+/* ==============================================================================
+   AI-Based Student Career Guidance System
+   Theme: Professional Black and White Modern Minimalist
+   ============================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8f9fa;
+    --bg-tertiary: #f1f3f5;
+    --text-primary: #121212;
+    --text-secondary: #495057;
+    --text-muted: #6c757d;
+    --border-color: #dee2e6;
+    --border-dark: #121212;
+    --dark-surface: #121212;
+    --dark-hover: #212529;
+    --card-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+    --card-shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.09);
+    --transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+/* ==============================================================================
+   TYPOGRAPHY & HEADINGS
+   ============================================================================== */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+}
+
+.text-dark-emphasis {
+    color: var(--text-primary) !important;
+}
+
+.lead-custom {
+    font-size: 1.15rem;
+    font-weight: 400;
+    color: var(--text-secondary);
+}
+
+/* ==============================================================================
+   NAVBAR & HEADER
+   ============================================================================== */
+.navbar-custom {
+    background-color: #000000;
+    border-bottom: 1px solid #212529;
+    padding: 0.85rem 0;
+}
+
+.navbar-custom .navbar-brand {
+    font-weight: 800;
+    font-size: 1.25rem;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    letter-spacing: -0.01em;
+}
+
+.navbar-custom .navbar-brand:hover {
+    color: #f8f9fa;
+}
+
+.navbar-custom .nav-link {
+    color: #ced4da;
+    font-weight: 500;
+    font-size: 0.95rem;
+    padding: 0.5rem 1rem;
+    transition: var(--transition);
+}
+
+.navbar-custom .nav-link:hover,
+.navbar-custom .nav-link.active {
+    color: #ffffff;
+}
+
+/* ==============================================================================
+   BUTTONS (BLACK AND WHITE THEME)
+   ============================================================================== */
+.btn-primary,
+.btn-dark {
+    background-color: #000000 !important;
+    border: 2px solid #000000 !important;
+    color: #ffffff !important;
+    font-weight: 600;
+    padding: 0.65rem 1.4rem;
+    border-radius: 6px;
+    transition: var(--transition);
+}
+
+.btn-primary:hover,
+.btn-dark:hover {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    border-color: #000000 !important;
+    transform: translateY(-1px);
+}
+
+.btn-outline-dark {
+    background-color: transparent !important;
+    border: 2px solid #000000 !important;
+    color: #000000 !important;
+    font-weight: 600;
+    padding: 0.65rem 1.4rem;
+    border-radius: 6px;
+    transition: var(--transition);
+}
+
+.btn-outline-dark:hover {
+    background-color: #000000 !important;
+    color: #ffffff !important;
+    transform: translateY(-1px);
+}
+
+.btn-light {
+    background-color: var(--bg-secondary) !important;
+    border: 1px solid var(--border-color) !important;
+    color: var(--text-primary) !important;
+    font-weight: 600;
+}
+
+.btn-light:hover {
+    background-color: #e9ecef !important;
+    color: #000000 !important;
+}
+
+/* ==============================================================================
+   CARDS & CONTAINERS
+   ============================================================================== */
+.card-custom {
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    box-shadow: var(--card-shadow);
+    transition: var(--transition);
+}
+
+.card-custom:hover {
+    border-color: #b0b4b8;
+    box-shadow: var(--card-shadow-hover);
+}
+
+.card-header-custom {
+    background-color: #000000;
+    color: #ffffff;
+    font-weight: 700;
+    padding: 1rem 1.25rem;
+    border-top-left-radius: 9px !important;
+    border-top-right-radius: 9px !important;
+    border-bottom: none;
+}
+
+/* ==============================================================================
+   HERO SECTION
+   ============================================================================== */
+.hero-section {
+    background-color: #000000;
+    color: #ffffff;
+    padding: 4.5rem 0 4rem 0;
+    border-bottom: 2px solid #212529;
+}
+
+.hero-tagline {
+    font-size: 1.35rem;
+    font-weight: 400;
+    color: #adb5bd;
+}
+
+/* ==============================================================================
+   SECTION HEADERS
+   ============================================================================== */
+.section-header {
+    text-align: center;
+    margin-bottom: 2.75rem;
+}
+
+.section-header h2 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    position: relative;
+    display: inline-block;
+}
+
+.section-header p {
+    color: var(--text-secondary);
+    font-size: 1.05rem;
+    margin-top: 0.5rem;
+}
+
+/* ==============================================================================
+   STEP CARDS / HOW IT WORKS
+   ============================================================================== */
+.step-card {
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 2.2rem 1.5rem;
+    text-align: center;
+    position: relative;
+    transition: var(--transition);
+    height: 100%;
+}
+
+.step-card:hover {
+    border-color: #000000;
+    transform: translateY(-4px);
+    box-shadow: var(--card-shadow-hover);
+}
+
+.step-number {
+    width: 48px;
+    height: 48px;
+    background-color: #000000;
+    color: #ffffff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 1.2rem;
+    margin: 0 auto 1.25rem auto;
+}
+
+/* ==============================================================================
+   FEATURE GRID
+   ============================================================================== */
+.feature-box {
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1.4rem;
+    height: 100%;
+    transition: var(--transition);
+}
+
+.feature-box:hover {
+    border-color: #000000;
+    background-color: var(--bg-secondary);
+}
+
+.feature-icon {
+    font-size: 1.75rem;
+    color: #000000;
+    margin-bottom: 0.75rem;
+}
+
+/* ==============================================================================
+   ASSESSMENT WIZARD & QUESTIONS
+   ============================================================================== */
+.assessment-category-tab {
+    cursor: pointer;
+    padding: 0.75rem 1.25rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    border-bottom: 2px solid transparent;
+    transition: var(--transition);
+}
+
+.assessment-category-tab.active {
+    color: #000000;
+    border-bottom: 3px solid #000000;
+}
+
+.question-block {
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    transition: var(--transition);
+}
+
+.question-block:hover {
+    border-color: #000000;
+}
+
+.question-title {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+}
+
+.option-label {
+    display: flex;
+    align-items: center;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.6rem;
+    cursor: pointer;
+    font-weight: 500;
+    transition: var(--transition);
+}
+
+.option-label:hover {
+    background: #e9ecef;
+    border-color: #adb5bd;
+}
+
+.option-label input[type="radio"] {
+    margin-right: 0.85rem;
+    accent-color: #000000;
+    transform: scale(1.15);
+}
+
+.option-label.selected {
+    background: #000000;
+    color: #ffffff;
+    border-color: #000000;
+}
+
+/* Progress indicator */
+.progress-container {
+    background-color: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.5rem;
+}
+
+.custom-progress-bar {
+    height: 10px;
+    background-color: #e9ecef;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.custom-progress-fill {
+    height: 100%;
+    background-color: #000000;
+    transition: width 0.3s ease;
+}
+
+/* ==============================================================================
+   RESULTS DASHBOARD
+   ============================================================================== */
+.career-match-card {
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 1.75rem;
+    margin-bottom: 1.5rem;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.career-match-card:hover {
+    border-color: #000000;
+    box-shadow: var(--card-shadow-hover);
+}
+
+.career-rank-pill {
+    background: #000000;
+    color: #ffffff;
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    display: inline-block;
+    margin-bottom: 0.5rem;
+}
+
+.match-score-badge {
+    background: #000000;
+    color: #ffffff;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-size: 1.25rem;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+}
+
+.badge-skill {
+    background-color: var(--bg-secondary);
+    color: #000000;
+    border: 1px solid var(--border-color);
+    font-weight: 600;
+    font-size: 0.85rem;
+    padding: 0.4rem 0.75rem;
+    border-radius: 6px;
+    display: inline-block;
+    margin: 0.2rem 0.2rem 0.2rem 0;
+}
+
+.badge-role {
+    background-color: #000000;
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 0.85rem;
+    padding: 0.4rem 0.75rem;
+    border-radius: 6px;
+    display: inline-block;
+    margin: 0.2rem 0.2rem 0.2rem 0;
+}
+
+/* ==============================================================================
+   SKILL GAP & ROADMAP TABLES
+   ============================================================================== */
+.table-custom {
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.table-custom thead th {
+    background-color: #000000;
+    color: #ffffff;
+    font-weight: 700;
+    padding: 0.9rem 1rem;
+    border: none;
+}
+
+.table-custom tbody td {
+    padding: 1rem;
+    vertical-align: middle;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.badge-status-optimal {
+    background-color: #000000;
+    color: #ffffff;
+    font-weight: 600;
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+}
+
+.badge-status-moderate {
+    background-color: #6c757d;
+    color: #ffffff;
+    font-weight: 600;
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+}
+
+.badge-status-gap {
+    background-color: #ffffff;
+    color: #000000;
+    border: 1px solid #000000;
+    font-weight: 700;
+    padding: 0.35rem 0.75rem;
+    border-radius: 4px;
+}
+
+/* Roadmap step timeline */
+.roadmap-step-box {
+    border-left: 3px solid #000000;
+    padding-left: 1.75rem;
+    margin-bottom: 2rem;
+    position: relative;
+}
+
+.roadmap-step-circle {
+    width: 28px;
+    height: 28px;
+    background-color: #000000;
+    color: #ffffff;
+    border-radius: 50%;
+    position: absolute;
+    left: -15px;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+}
+
+/* ==============================================================================
+   AI ASSISTANT CHAT
+   ============================================================================== */
+.chat-container {
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 580px;
+}
+
+.chat-history {
+    flex: 1;
+    padding: 1.5rem;
+    overflow-y: auto;
+    background-color: var(--bg-secondary);
+}
+
+.chat-bubble-bot {
+    background-color: #ffffff;
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.25rem;
+    max-width: 88%;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+    white-space: pre-line;
+}
+
+.chat-bubble-user {
+    background-color: #000000;
+    color: #ffffff;
+    border-radius: 8px;
+    padding: 0.85rem 1.25rem;
+    margin-bottom: 1.25rem;
+    margin-left: auto;
+    max-width: 80%;
+}
+
+.prompt-chip {
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    border-radius: 20px;
+    padding: 0.4rem 0.9rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    display: inline-block;
+    margin: 0.25rem;
+}
+
+.prompt-chip:hover {
+    background: #000000;
+    color: #ffffff;
+    border-color: #000000;
+}
+
+/* ==============================================================================
+   FOOTER
+   ============================================================================== */
+.footer-custom {
+    background-color: #000000;
+    color: #adb5bd;
+    border-top: 1px solid #212529;
+    padding: 2.5rem 0 1.5rem 0;
+    font-size: 0.95rem;
+}
+
+.footer-custom a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.footer-custom a:hover {
+    text-decoration: underline;
+}
+
+/* Print styling */
+@media print {
+    .navbar-custom, .footer-custom, .btn, .no-print {
+        display: none !important;
+    }
+    body {
+        background-color: #ffffff !important;
+    }
+}

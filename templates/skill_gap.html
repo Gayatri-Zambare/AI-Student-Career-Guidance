@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+
+{% block title %}Skill Gap Analysis - AI Career Guidance{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- Header -->
+    <div class="d-flex flex-wrap justify-content-between align-items-center pb-3 mb-4 border-bottom">
+        <div>
+            <span class="badge bg-dark mb-1">Competency Benchmark</span>
+            <h2 class="fw-bold mb-0">Skill Gap Analysis</h2>
+            <p class="text-secondary small mb-0">Evaluate your current assessed skill levels against benchmark industry requirements for your target career.</p>
+        </div>
+        <div class="d-flex align-items-center gap-2 mt-2 mt-md-0">
+            <!-- Career Selector Form -->
+            <form action="{{ url_for('skill_gap') }}" method="GET" class="d-flex align-items-center gap-2">
+                <label for="career-select" class="small fw-bold text-nowrap text-secondary">Target Career:</label>
+                <select name="career" id="career-select" class="form-select form-select-sm border-dark" onchange="this.form.submit()">
+                    {% for c in available_careers %}
+                        <option value="{{ c }}" {% if c == selected_career %}selected{% endif %}>{{ c }}</option>
+                    {% endfor %}
+                </select>
+            </form>
+        </div>
+    </div>
+
+    <!-- Active Career Banner -->
+    <div class="card card-custom mb-4 bg-light">
+        <div class="card-body p-4 d-flex flex-wrap justify-content-between align-items-center gap-3">
+            <div>
+                <span class="text-secondary small text-uppercase fw-bold" style="letter-spacing: 0.05em;">Currently Analyzing</span>
+                <h3 class="fw-bold text-dark mb-1">{{ gap_data.career }}</h3>
+                <p class="text-secondary mb-0 small">Comparing candidate self-assessment responses with expected industry standards.</p>
+            </div>
+            <div>
+                <a href="{{ url_for('roadmap', career=gap_data.career) }}" class="btn btn-dark btn-sm fw-bold">
+                    <i class="bi bi-signpost-split me-1"></i> View Career Roadmap
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Skill Gap Table (Section 16) -->
+    <div class="card card-custom mb-4">
+        <div class="card-header bg-dark text-white p-3">
+            <h5 class="mb-0 fw-bold"><i class="bi bi-bar-chart-steps me-2"></i> Competency Comparison Matrix</h5>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-custom table-hover align-middle mb-0">
+                <thead>
+                    <tr>
+                        <th style="min-width: 220px;">Skill Domain</th>
+                        <th style="min-width: 140px;">Current Assessed Level</th>
+                        <th style="min-width: 140px;">Required Industry Level</th>
+                        <th style="min-width: 180px;">Alignment Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in gap_data.rows %}
+                    <tr>
+                        <td>
+                            <strong class="text-dark">{{ row.skill }}</strong>
+                        </td>
+                        <td>
+                            <span class="badge {% if row.current_level == 'High' %}bg-dark text-white{% elif row.current_level == 'Medium' %}bg-secondary text-white{% else %}bg-light text-dark border{% endif %} px-3 py-2">
+                                {{ row.current_level }}
+                            </span>
+                        </td>
+                        <td>
+                            <span class="badge bg-dark px-3 py-2 text-white">
+                                {{ row.required_level }}
+                            </span>
+                        </td>
+                        <td>
+                            {% if row.status == 'Optimal Alignment' %}
+                                <span class="badge-status-optimal">
+                                    <i class="bi bi-check-circle-fill me-1"></i> Optimal Alignment
+                                </span>
+                            {% elif row.status == 'Moderate Gap' %}
+                                <span class="badge-status-moderate">
+                                    <i class="bi bi-exclamation-circle-fill me-1"></i> Moderate Gap
+                                </span>
+                            {% else %}
+                                <span class="badge-status-gap">
+                                    <i class="bi bi-arrow-up-circle-fill me-1"></i> Needs Improvement
+                                </span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Recommended Skills to Improve (Section 16) -->
+    <div class="card card-custom mb-4">
+        <div class="card-header bg-dark text-white p-3">
+            <h5 class="mb-0 fw-bold"><i class="bi bi-lightning-charge-fill me-2"></i> Recommended Skills to Improve</h5>
+        </div>
+        <div class="card-body p-4">
+            <p class="text-secondary mb-3">
+                To maximize your employability and confidence as a <strong>{{ gap_data.career }}</strong>, prioritize strengthening these key domains:
+            </p>
+
+            <div class="row g-3">
+                {% for rec in gap_data.recommended_skills %}
+                <div class="col-md-6">
+                    <div class="p-3 border rounded h-100 bg-white">
+                        <div class="d-flex align-items-center gap-2 mb-2">
+                            <span class="badge bg-dark rounded-circle p-2"><i class="bi bi-arrow-up text-white"></i></span>
+                            <h6 class="fw-bold text-dark mb-0">{{ rec.skill }}</h6>
+                        </div>
+                        <p class="text-secondary small mb-0">{{ rec.action }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Footer -->
+    <div class="d-flex justify-content-between align-items-center pt-3 border-top">
+        <a href="{{ url_for('comparison') }}" class="btn btn-outline-dark">
+            <i class="bi bi-arrow-left me-1"></i> Career Comparison
+        </a>
+        <a href="{{ url_for('roadmap', career=gap_data.career) }}" class="btn btn-dark">
+            Personalized Career Roadmap <i class="bi bi-arrow-right ms-1"></i>
+        </a>
+    </div>
+</div>
+{% endblock %}
