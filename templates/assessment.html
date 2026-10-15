@@ -5,20 +5,22 @@
 {% block content %}
 <div class="container py-4">
     <!-- Student Header Banner -->
-    <div class="d-flex flex-wrap align-items-center justify-content-between p-3 bg-white border rounded-3 shadow-sm mb-4">
+    <div class="d-flex flex-wrap align-items-center justify-content-between p-3 bg-white border rounded-4 shadow-sm mb-4">
         <div class="d-flex align-items-center gap-3">
-            <div class="brand-icon-box" style="width: 44px; height: 44px; font-size: 1.3rem;">
+            <div class="brand-icon-box" style="width: 48px; height: 48px; font-size: 1.4rem;">
                 <i class="bi bi-person-fill text-white"></i>
             </div>
             <div>
-                <span class="badge bg-primary-subtle text-primary fw-bold mb-1">Registered Student</span>
+                <span class="badge bg-primary-subtle text-primary fw-bold mb-1">
+                    <i class="bi bi-patch-check-fill me-1"></i> Registered Candidate
+                </span>
                 <h5 class="fw-bold mb-0 text-dark">{{ student.name }}</h5>
                 <span class="text-secondary small">{{ student.education }}{% if student.course %} • {{ student.course }}{% endif %}</span>
             </div>
         </div>
         <div class="d-flex align-items-center gap-2 mt-2 mt-md-0">
             <span class="badge bg-success-subtle text-success px-3 py-2 rounded-pill fw-bold">
-                <i class="bi bi-check-circle-fill me-1"></i> Multi-Dimensional Evaluation
+                <i class="bi bi-cpu-fill me-1"></i> Multi-Dimensional Engine
             </span>
         </div>
     </div>
@@ -26,8 +28,12 @@
     <!-- Progress Indicator Card -->
     <div class="progress-container">
         <div class="d-flex justify-content-between align-items-center mb-2">
-            <span class="fw-bold small text-uppercase text-secondary" style="letter-spacing: 0.05em;">Assessment Progress</span>
-            <span class="fw-bold small text-primary" id="assessment-progress-count">0 of 30 Questions Answered (0%)</span>
+            <span class="fw-bold small text-uppercase text-secondary" style="letter-spacing: 0.05em;">
+                <i class="bi bi-sliders me-1 text-primary"></i> Assessment Progress
+            </span>
+            <span class="badge bg-primary text-white fw-bold px-3 py-1 rounded-pill" id="assessment-progress-count">
+                0 of 30 Answered (0%)
+            </span>
         </div>
         <div class="custom-progress-bar">
             <div class="custom-progress-fill" id="assessment-progress-fill" style="width: 0%;"></div>
@@ -35,7 +41,7 @@
     </div>
 
     <!-- Category Tabs Navigation -->
-    <div class="d-flex flex-nowrap overflow-auto border-bottom mb-4 pb-1">
+    <div class="d-flex flex-nowrap overflow-auto mb-4 pb-2" style="scrollbar-width: thin;">
         {% for cat in categories %}
             <div class="assessment-category-tab flex-shrink-0 {% if loop.first %}active{% endif %}" data-cat-index="{{ loop.index0 }}">
                 <i class="bi {{ cat.icon }} me-1"></i> {{ cat.name }} (Q{{ cat.question_ids[0] }}-Q{{ cat.question_ids[-1] }})
@@ -48,10 +54,10 @@
         {% for cat in categories %}
             <div class="category-pane {% if not loop.first %}d-none{% endif %}" id="cat-pane-{{ loop.index0 }}">
                 <div class="card card-custom mb-4">
-                    <div class="card-header-gradient p-3 d-flex justify-content-between align-items-center">
+                    <div class="card-header-gradient p-3 d-flex justify-content-between align-items-center flex-wrap gap-2">
                         <div>
                             <h5 class="mb-0 fw-bold text-white"><i class="bi {{ cat.icon }} me-2"></i> Section {{ loop.index }}: {{ cat.name }}</h5>
-                            <small class="text-light opacity-90">{{ cat.description }}</small>
+                            <small class="text-light opacity-85">{{ cat.description }}</small>
                         </div>
                         <span class="badge bg-white text-primary fw-bold px-3 py-2 rounded-pill">Questions {{ cat.question_ids[0] }} to {{ cat.question_ids[-1] }}</span>
                     </div>
@@ -65,7 +71,7 @@
                                         <span class="fw-bold fs-6 text-dark">{{ q.text }} <span class="text-danger">*</span></span>
                                     </div>
 
-                                    <div class="options-container ps-md-4">
+                                    <div class="options-container ps-md-3">
                                         {% for opt in q.options %}
                                             {% set is_checked = (existing_responses and existing_responses.get(q.id) == opt) %}
                                             <label class="option-label {% if is_checked %}selected{% endif %}">

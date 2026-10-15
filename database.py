@@ -1,10 +1,26 @@
 import sqlite3
 import os
+import shutil
 
-DATABASE_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'database.db')
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DEFAULT_DB_PATH = os.path.join(BASE_DIR, 'database.db')
+
+# In Vercel or serverless environments with a read-only filesystem, use /tmp
+if os.environ.get("VERCEL") or os.environ.get("AWS_LAMBDA_FUNCTION_NAME"):
+    DATABASE_PATH = os.path.join("/tmp", "database.db")
+    if not os.path.exists(DATABASE_PATH) and os.path.exists(DEFAULT_DB_PATH):
+        try:
+            shutil.copy2(DEFAULT_DB_PATH, DATABASE_PATH)
+        except Exception:
+            pass
+else:
+    DATABASE_PATH = os.environ.get("DATABASE_PATH", DEFAULT_DB_PATH)
 
 def get_db():
     """Get a database connection with dict-like row access."""
+    db_dir = os.path.dirname(DATABASE_PATH)
+    if db_dir and not os.path.exists(db_dir):
+        os.makedirs(db_dir, exist_ok=True)
     conn = sqlite3.connect(DATABASE_PATH)
     conn.row_factory = sqlite3.Row
     conn.execute("PRAGMA foreign_keys = ON")

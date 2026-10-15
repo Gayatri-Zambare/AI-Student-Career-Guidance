@@ -10,8 +10,14 @@ import re
 import database as db
 import recommendation_engine as engine
 
-app = Flask(__name__)
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+app = Flask(
+    __name__,
+    template_folder=os.path.join(BASE_DIR, "templates"),
+    static_folder=os.path.join(BASE_DIR, "static")
+)
 app.secret_key = os.environ.get("FLASK_SECRET_KEY", "fai_career_guidance_secret_key_2026_xyz")
+app.config["TEMPLATES_AUTO_RELOAD"] = True
 
 # Initialize database schema on startup
 with app.app_context():

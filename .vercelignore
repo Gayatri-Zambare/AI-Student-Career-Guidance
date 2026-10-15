@@ -1,0 +1,10 @@
+.git
+.venv
+env
+venv
+__pycache__
+*.pyc
+test_system.py
+render.yaml
+Procfile
+README.md

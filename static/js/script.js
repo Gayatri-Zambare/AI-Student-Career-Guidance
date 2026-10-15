@@ -1,11 +1,12 @@
 /**
  * script.js
- * Client-side interactivity for AI-Based Student Career Guidance System.
- * Colorful and vibrant visualizations, assessment wizard pagination,
- * progress tracking, and AI Assistant dynamic chat.
+ * High-tech client-side interactivity for AI-Based Student Career Guidance System.
+ * Sleek animations, assessment wizard pagination, progress tracking,
+ * Chart.js visualizations, and responsive AI Assistant dynamic chat.
  */
 
 document.addEventListener("DOMContentLoaded", function () {
+    initNavbarScroll();
     initOptionStyling();
     initAssessmentWizard();
     initCharts();
@@ -13,7 +14,23 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // ==============================================================================
-// 1. OPTION SELECTION STYLING
+// 1. DYNAMIC FROSTED NAVBAR ON SCROLL
+// ==============================================================================
+function initNavbarScroll() {
+    const navbar = document.getElementById("main-navbar");
+    if (!navbar) return;
+
+    window.addEventListener("scroll", () => {
+        if (window.scrollY > 20) {
+            navbar.classList.add("scrolled");
+        } else {
+            navbar.classList.remove("scrolled");
+        }
+    });
+}
+
+// ==============================================================================
+// 2. OPTION SELECTION STYLING & TACTILE FEEDBACK
 // ==============================================================================
 function initOptionStyling() {
     const radioInputs = document.querySelectorAll('.option-label input[type="radio"]');
@@ -37,7 +54,7 @@ function initOptionStyling() {
 }
 
 // ==============================================================================
-// 2. ASSESSMENT WIZARD & PROGRESS TRACKING
+// 3. ASSESSMENT WIZARD & PROGRESS TRACKING
 // ==============================================================================
 function initAssessmentWizard() {
     const wizardForm = document.getElementById("assessment-form");
@@ -132,11 +149,11 @@ function initAssessmentWizard() {
                 });
                 
                 targetBlock.scrollIntoView({ behavior: "smooth", block: "center" });
-                targetBlock.classList.add("border-danger");
-                setTimeout(() => targetBlock.classList.remove("border-danger"), 3000);
+                targetBlock.style.borderColor = "var(--accent-rose)";
+                setTimeout(() => targetBlock.style.borderColor = "", 3500);
             }
 
-            alert(`Please answer all 30 assessment questions before submitting.\n\nYou have ${unanswered.length} unanswered questions (e.g., Q${firstUnansweredQ}).`);
+            alert(`Please complete all 30 assessment questions before submitting.\n\nYou have ${unanswered.length} unanswered questions (e.g., Question ${firstUnansweredQ}).`);
         }
     });
 
@@ -158,31 +175,31 @@ function updateAssessmentProgress() {
     const countText = document.getElementById("assessment-progress-count");
 
     if (fillBar) fillBar.style.width = `${progressPercent}%`;
-    if (countText) countText.textContent = `${answered} of ${total} Questions Answered (${progressPercent}%)`;
+    if (countText) countText.textContent = `${answered} of ${total} Answered (${progressPercent}%)`;
 }
 
 // ==============================================================================
-// 3. COLORFUL CHART.JS VISUALIZATIONS
+// 4. CHART.JS VISUALIZATIONS (HIGH-TECH THEME)
 // ==============================================================================
 function initCharts() {
-    // 3.1 Colorful Career Compatibility Bar Chart
+    // 4.1 Career Compatibility Bar Chart
     const barCanvas = document.getElementById("careerBarChart");
     if (barCanvas && window.chartCareersData && window.chartScoresData) {
         const vibrantColors = [
-            'rgba(79, 70, 229, 0.9)',   // Indigo
-            'rgba(124, 58, 237, 0.9)',  // Violet
-            'rgba(6, 182, 212, 0.9)',   // Cyan
-            'rgba(16, 185, 129, 0.9)',  // Emerald
-            'rgba(245, 158, 11, 0.9)',  // Amber
-            'rgba(236, 72, 153, 0.9)'   // Pink
+            'rgba(99, 102, 241, 0.85)',  // Indigo
+            'rgba(139, 92, 246, 0.85)', // Violet
+            'rgba(6, 182, 212, 0.85)',  // Cyan
+            'rgba(16, 185, 129, 0.85)', // Emerald
+            'rgba(245, 158, 11, 0.85)', // Amber
+            'rgba(244, 63, 94, 0.85)'   // Rose
         ];
         const borderColors = [
-            '#4f46e5',
-            '#7c3aed',
+            '#6366f1',
+            '#8b5cf6',
             '#06b6d4',
             '#10b981',
             '#f59e0b',
-            '#ec4899'
+            '#f43f5e'
         ];
 
         new Chart(barCanvas, {
@@ -195,7 +212,8 @@ function initCharts() {
                     backgroundColor: vibrantColors,
                     borderColor: borderColors,
                     borderWidth: 2,
-                    borderRadius: 8
+                    borderRadius: 10,
+                    barPercentage: 0.65
                 }]
             },
             options: {
@@ -206,11 +224,13 @@ function initCharts() {
                         display: false
                     },
                     tooltip: {
-                        backgroundColor: '#1e1b4b',
+                        backgroundColor: '#0f172a',
                         titleColor: '#ffffff',
-                        bodyColor: '#c7d2fe',
+                        bodyColor: '#a5b4fc',
+                        borderColor: 'rgba(99, 102, 241, 0.3)',
+                        borderWidth: 1,
                         padding: 12,
-                        cornerRadius: 8,
+                        cornerRadius: 10,
                         callbacks: {
                             label: function (context) {
                                 return ` Compatibility Match: ${context.parsed.y}%`;
@@ -247,7 +267,7 @@ function initCharts() {
         });
     }
 
-    // 3.2 Colorful Skill Profile Radar Chart
+    // 4.2 Skill Profile Radar Chart
     const radarCanvas = document.getElementById("skillRadarChart");
     if (radarCanvas && window.skillProfileData) {
         const labels = Object.keys(window.skillProfileData);
@@ -258,14 +278,14 @@ function initCharts() {
             data: {
                 labels: labels,
                 datasets: [{
-                    label: 'Demonstrated Aptitude Score',
+                    label: 'Aptitude Score',
                     data: dataValues,
-                    backgroundColor: 'rgba(99, 102, 241, 0.25)',
-                    borderColor: '#4f46e5',
+                    backgroundColor: 'rgba(99, 102, 241, 0.22)',
+                    borderColor: '#6366f1',
                     borderWidth: 2.5,
-                    pointBackgroundColor: '#7c3aed',
+                    pointBackgroundColor: '#8b5cf6',
                     pointBorderColor: '#ffffff',
-                    pointBorderWidth: 2.5,
+                    pointBorderWidth: 2,
                     pointRadius: 5,
                     pointHoverRadius: 7
                 }]
@@ -278,7 +298,11 @@ function initCharts() {
                         display: false
                     },
                     tooltip: {
-                        backgroundColor: '#1e1b4b',
+                        backgroundColor: '#0f172a',
+                        titleColor: '#ffffff',
+                        bodyColor: '#a5b4fc',
+                        borderColor: 'rgba(99, 102, 241, 0.3)',
+                        borderWidth: 1,
                         padding: 10,
                         cornerRadius: 8
                     }
@@ -313,7 +337,7 @@ function initCharts() {
 }
 
 // ==============================================================================
-// 4. AI CAREER ASSISTANT (CHAT & INTERACTIVE QUERIES)
+// 5. AI CAREER ASSISTANT (CHAT & INTERACTIVE ADVISORY)
 // ==============================================================================
 function initAiAssistant() {
     const chatContainer = document.getElementById("ai-chat-history");
@@ -340,7 +364,7 @@ function initAiAssistant() {
         const typingIndicator = document.createElement("div");
         typingIndicator.className = "chat-bubble-bot";
         typingIndicator.id = "typing-placeholder";
-        typingIndicator.innerHTML = "<em>Analyzing your profile and recommendations...</em>";
+        typingIndicator.innerHTML = '<span class="text-secondary"><i class="bi bi-cpu me-1 text-primary"></i> AI Analyzing profile & industry database...</span>';
         chatContainer.appendChild(typingIndicator);
         chatContainer.scrollTop = chatContainer.scrollHeight;
 

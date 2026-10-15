@@ -1,2 +1,21 @@
+# ==============================================================================
+# AI-Based Student Career Guidance System - Dependencies
+# ==============================================================================
+
+# Core Web Framework
+# - Used in app.py for routing, request handling, Jinja2 template rendering, and session management
 Flask>=3.0.0
+
+# Production WSGI HTTP Server
+# - Used for cloud deployment (Render, Linux, Docker) to serve the Flask app in production
 gunicorn>=21.2.0
+
+# ------------------------------------------------------------------------------
+# Built-in Python Standard Libraries Used in This Project (No pip install required):
+# - sqlite3: Local relational database engine (database.py)
+# - math: Mathematical and statistical scoring calculations (recommendation_engine.py)
+# - re: Regular expression pattern matching for query parsing (recommendation_engine.py, app.py)
+# - os: Operating system interface, paths, and environment variables (app.py, database.py)
+# - datetime: Timestamp tracking for student assessment records (database.py)
+# - unittest: Automated system validation and route testing suite (test_system.py)
+# ------------------------------------------------------------------------------
