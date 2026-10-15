@@ -309,15 +309,16 @@ elif page == "📝 Career Assessment (30 Qs)":
         if submitted:
             st.session_state.responses = temp_responses
             
+            student_id = st.session_state.student.get("id") or 1
             # Save into SQLite
-            db.save_assessment_responses(st.session_state.student["id"], temp_responses)
+            db.save_assessment_responses(student_id, temp_responses)
             
             # Run Recommendation Engine
             evaluations = engine.evaluate_career_compatibility(st.session_state.student, temp_responses)
             st.session_state.career_results = evaluations
             
             # Save results into SQLite
-            db.save_career_results(st.session_state.student["id"], evaluations)
+            db.save_career_results(student_id, evaluations)
             
             st.success("🎉 Assessment analyzed successfully! Head to **Results Dashboard** to view your report.")
 
