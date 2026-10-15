@@ -18,10 +18,17 @@ app = Flask(
 )
 app.secret_key = os.environ.get("FLASK_SECRET_KEY", "fai_career_guidance_secret_key_2026_xyz")
 app.config["TEMPLATES_AUTO_RELOAD"] = True
+app.config["SESSION_COOKIE_HTTPONLY"] = True
+app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
 
 # Initialize database schema on startup
 with app.app_context():
     db.init_db()
+
+@app.route("/favicon.ico")
+def favicon():
+    """Favicon route to avoid 404 console noise."""
+    return "", 204
 
 # Helper function to get current student or None
 def get_current_student():
@@ -447,12 +454,25 @@ def reset():
 # ------------------------------------------------------------------------------
 @app.errorhandler(404)
 def page_not_found(e):
-    return render_template("base.html", error_title="404 - Page Not Found", error_message="The page you requested could not be located."), 404
+    return render_template(
+        "error.html",
+        error_code="404",
+        error_title="Page Not Found",
+        error_message="The requested career page or resource could not be found. Please check the URL or return to the main dashboard."
+    ), 404
 
 @app.errorhandler(500)
 def server_error(e):
-    return render_template("base.html", error_title="500 - Application Error", error_message="An unexpected system error occurred. Please try again."), 500
+    return render_template(
+        "error.html",
+        error_code="500",
+        error_title="Internal System Error",
+        error_message="An unexpected system condition occurred. Your assessment data remains safe in the database. Please try again."
+    ), 500
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port, debug=False)
+    debug_mode = os.environ.get("FLASK_DEBUG", "0") == "1"
+    print(f" * AI Student Career Guidance System is running!")
+    print(f" * Localhost link: http://127.0.0.1:{port}/ or http://localhost:{port}/")
+    app.run(host="0.0.0.0", port=port, debug=debug_mode)

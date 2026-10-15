@@ -1083,6 +1083,11 @@ def calculate_skill_profile(responses):
     Computes a 6-dimension skill profile (0-100) from assessment responses.
     Dimensions: Technical, Analytical, Communication, Creativity, Leadership, Teamwork.
     """
+    if responses:
+        responses = {int(k) if str(k).isdigit() else k: v for k, v in responses.items()}
+    else:
+        responses = {}
+
     # Raw score accumulators and maximum possible values
     scores = {
         "Technical": 10,
@@ -1266,6 +1271,11 @@ def evaluate_career_compatibility(student_profile, responses):
     Evaluates student profile and 30 assessment questions against all 16 careers.
     Returns sorted list of careers with dynamic percentage compatibility and explainable reasons.
     """
+    if responses:
+        responses = {int(k) if str(k).isdigit() else k: v for k, v in responses.items()}
+    else:
+        responses = {}
+
     results = []
 
     # Extract student self-rated attributes
@@ -1489,6 +1499,11 @@ def get_skill_gap_analysis(career_name, student_profile, responses):
     Performs Skill Gap Analysis for the specified career:
     Compares Current Skill Level vs Required Skill Level and suggests actionable improvements.
     """
+    if responses:
+        responses = {int(k) if str(k).isdigit() else k: v for k, v in responses.items()}
+    else:
+        responses = {}
+
     if career_name not in CAREER_CATALOG:
         career_name = "Software Developer"
 
