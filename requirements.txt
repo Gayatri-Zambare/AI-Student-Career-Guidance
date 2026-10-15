@@ -5,13 +5,8 @@
 # Core Web Framework (Flask Web App)
 Flask>=3.0.0
 
-# Production WSGI HTTP Server (Render, Linux, Docker)
+# Production WSGI HTTP Server (Render, Heroku, Railway, Linux, Docker)
 gunicorn>=21.2.0
-
-# Streamlit Framework (Streamlit Community Cloud Deployment)
-streamlit>=1.35.0
-altair>=5.0.0
-pandas>=2.0.0
 
 # ------------------------------------------------------------------------------
 # Built-in Python Standard Libraries Used in This Project (No pip install required):
