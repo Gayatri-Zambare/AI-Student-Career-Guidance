@@ -184,6 +184,17 @@ The database (`database.db`) will be automatically initialized on first launch.
 
 ---
 
+## 8. Deployment on Vercel
+
+The project is fully pre-configured for **Vercel Serverless Functions** via `vercel.json` and `api/index.py`:
+
+1. Visit [Vercel Dashboard](https://vercel.com/new).
+2. Click **Add New...** -> **Project** and import your GitHub repository:
+   `https://github.com/Gayatri-Zambare/AI-Student-Career-Guidance`
+3. Click **Deploy**. Vercel will automatically build the Python runtime and generate your production URL (e.g. `https://ai-student-career-guidance.vercel.app`).
+
+---
+
 ## 8. Verification & Test Profiles
 
 To demonstrate explainability during viva or presentation testing, verify these three distinct candidate profiles:
