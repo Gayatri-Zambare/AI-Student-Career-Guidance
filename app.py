@@ -4,6 +4,18 @@ Main Flask Application for AI-Based Student Career Guidance System.
 Integrates HTML/Bootstrap Frontend, Python AI Recommendation Engine, and SQLite Database.
 """
 
+# If launched via Streamlit Community Cloud (which defaults to app.py), delegate to streamlit_app
+try:
+    import streamlit as _st
+    if _st.runtime.exists():
+        import streamlit_app
+        import sys
+        sys.exit(0)
+except SystemExit:
+    raise
+except Exception:
+    pass
+
 from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify
 import os
 import re
